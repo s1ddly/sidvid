@@ -29,10 +29,11 @@ async def on_message(message):
         if message.content[0:4] == "-dl ":
             invid = message.content.split(" ")[1]
             print(str(datetime.now()) + " " + message.author.name + " Tried to download: " + invid)
-            
-            if yt_getsize(invid) < 8388608:
-                await message.channel.send(message.author.mention, file=File(yt_dl(message.content,str(int(time.time_ns())) + ".mp4")))
-            else:
-                await message.channel.send(message.author.mention + " Failed to download, file is over 8mb(" + str(yt_getsize(invid)) + " bytes) :(")
-    
+            try:
+                if yt_getsize(invid) < 8388608:
+                    await message.channel.send(message.author.mention, file=File(yt_dl(message.content,str(int(time.time_ns())) + ".mp4")))
+                else:
+                    await message.channel.send(message.author.mention + " Failed to download, file is over 8mb(" + str(yt_getsize(invid)) + " bytes) :(")
+            except:
+                message.channel.send(message.author.mention + " There was an error with the download :o, please check the message and try again")
 client.run(token)

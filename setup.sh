@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 echo "Starting server!"
 echo "Setting up Virtual Environment"
-pip install virtualenv
+pip install virtualenv==20.16.2
 python3 -m virtualenv sidvidpy
 source sidvidpy/bin/activate
 echo "Installing the required libraries in the venv"
-pip install pytube
-pip install discord.py
+pip install pytube==12.1.0
+pip install discord.py==1.7.3
 echo "Executing python"
 python3 sidvidserver.py
 echo "Shutting down venv "
