@@ -10,6 +10,32 @@
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="css/styles.css" rel="stylesheet" />
 		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<script>
+		window.addEventListener('DOMContentLoaded', event => {
+			// Activate Bootstrap scrollspy on the main nav element
+			const mainNav = document.body.querySelector('#mainNav');
+			if (mainNav) {
+				new bootstrap.ScrollSpy(document.body, {
+					target: '#mainNav',
+					offset: 74,
+				});
+			};
+
+			// Collapse responsive navbar when toggler is visible
+			const navbarToggler = document.body.querySelector('.navbar-toggler');
+			const responsiveNavItems = [].slice.call(
+				document.querySelectorAll('#navbarResponsive .nav-link')
+			);
+			responsiveNavItems.map(function (responsiveNavItem) {
+				responsiveNavItem.addEventListener('click', () => {
+					if (window.getComputedStyle(navbarToggler).display !== 'none') {
+						navbarToggler.click();
+					}
+				});
+			});
+
+		});
+		</script>
     </head>
     <body id="page-top">
         <!-- Navigation-->
@@ -74,13 +100,16 @@
             </div>
         </section>
         <!-- Footer-->
-        <footer class="py-5 bg-dark">
-            <div class="container px-4"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2022</p></div>
-        </footer>
+		<footer class="py-4" style="color: var(--bs-body-bg);">
+				<div class="container px-4 px-lg-5"><p class="m-0 text-center text-white" style="color: var(--bs-body-bg);">Placeholder</p></div>
+		</footer>
+        <div class="fixed-bottom">
+			<footer class="py-4 bg-dark">
+				<div class="container px-4 px-lg-5"><p class="m-0 text-center text-white">This webpage was made by using a <a href="https://startbootstrap.com/template/scrolling-nav" onMouseOver="this.style.color='#212529'" onMouseOut="this.style.color='#0d6efd'" target="_blank">Template</a> under the MIT <a href="https://github.com/StartBootstrap/startbootstrap-scrolling-nav/blob/master/LICENSE" onMouseOver="this.style.color='#212529'" onMouseOut="this.style.color='#0d6efd'" target="_blank">License</a></p></div>
+			</footer>
+		</div>
         <!-- Bootstrap core JS-->
         <script src="js/jquery-3.6.0.min.js"></script>
 		<script src="js/bootstrap.min.js"></script>
-        <!-- Core theme JS-->
-        <script src="js/scripts.js"></script>
     </body>
 </html>
