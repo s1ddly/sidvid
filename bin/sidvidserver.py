@@ -5,6 +5,7 @@ import discord
 from discord import File
 import time
 from datetime import datetime
+import subprocess
 
 token = open("token","r").read()
 
@@ -30,21 +31,41 @@ async def on_message(message):
             invid = message.content.split(" ")[1]
             print(str(datetime.now()) + " " + message.author.name + ", " + message.guild.name + " Tried to download: " + invid)
             try:
-                if message.guild.premium_tier == 0 or message.guild.premium_tier == 1:
-                    if yt_getsize(invid) < 8388608:
-                        await message.channel.send(message.author.mention, file=File(yt_dl(message.content,str(int(time.time_ns())) + ".mp4")))
-                    else:
-                        await message.channel.send(message.author.mention + " Failed to download, file is over 8mb(" + str(yt_getsize(invid)) + " bytes) :(")
-                elif message.guild.premium_tier == 2:
-                    if yt_getsize(invid) < 52428800:
-                        await message.channel.send(message.author.mention, file=File(yt_dl(message.content,str(int(time.time_ns())) + ".mp4")))
-                    else:
-                        await message.channel.send(message.author.mention + " Failed to download, file is over 50mb(" + str(yt_getsize(invid)) + " bytes) :(")
-                elif message.guild.premium_tier == 3:
-                    if yt_getsize(invid) < 104857600:
-                        await message.channel.send(message.author.mention, file=File(yt_dl(message.content,str(int(time.time_ns())) + ".mp4")))
-                    else:
-                        await message.channel.send(message.author.mention + " Failed to download, file is over 100mb(" + str(yt_getsize(invid)) + " bytes) :(")
+                if "youtu" in message.content.lower():
+                    if message.guild.premium_tier == 0 or message.guild.premium_tier == 1:
+                        if yt_getsize(invid) < 8388608:
+                            await message.channel.send(message.author.mention, file=File(yt_dl(invid,str(int(time.time_ns())) + ".mp4")))
+                        else:
+                            await message.channel.send(message.author.mention + " Failed to download, file is over 8mb(" + str(yt_getsize(invid)) + " bytes) :(")
+                    elif message.guild.premium_tier == 2:
+                        if yt_getsize(invid) < 52428800:
+                            await message.channel.send(message.author.mention, file=File(yt_dl(invid,str(int(time.time_ns())) + ".mp4")))
+                        else:
+                            await message.channel.send(message.author.mention + " Failed to download, file is over 50mb(" + str(yt_getsize(invid)) + " bytes) :(")
+                    elif message.guild.premium_tier == 3:
+                        if yt_getsize(invid) < 104857600:
+                            await message.channel.send(message.author.mention, file=File(yt_dl(invid,str(int(time.time_ns())) + ".mp4")))
+                        else:
+                            await message.channel.send(message.author.mention + " Failed to download, file is over 100mb(" + str(yt_getsize(invid)) + " bytes) :(")
+                elif "tiktok" in message.content.lower():
+                    tiktokinfo = subprocess.run(["you-get", "-i", invid], capture_output=True)
+                    tiktoksize = int(str(tiktokinfo.stdout).split("Size")[1].split("(")[1].split(")")[0].split(" Bytes")[0])
+                    tiktoktitle = str(str(tiktokinfo.stdout).split("\\n")[1].split("      ")[1])
+                    print(str(datetime.now()) + " " + tiktoktitle)
+                    print(str(datetime.now()) + " Filesize: " + str(tiktoksize))
+                    tiktoktime = str(int(time.time_ns()))
+                    if message.guild.premium_tier == 0 or message.guild.premium_tier == 1:
+                        if tiktoksize < 8388608:
+                            tiktokdl = subprocess.run(["you-get", "-o", "output", "-O", tiktoktime, invid])
+                            await message.channel.send(message.author.mention, file=File("output/" + tiktoktime + ".mp4"))
+                    elif message.guild.premium_tier == 2:
+                        if tiktoksize < 52428800:
+                            tiktokdl = subprocess.run(["you-get", "-o", "output", "-O", tiktoktime, invid])
+                            await message.channel.send(message.author.mention, file=File("output/" + tiktoktime + ".mp4"))
+                    elif message.guild.premium_tier == 3:
+                        if tiktoksize < 104857600:
+                            tiktokdl = subprocess.run(["you-get", "-o", "output", "-O", tiktoktime, invid])
+                            await message.channel.send(message.author.mention, file=File("output/" + tiktoktime + ".mp4"))
             except:
                 await message.channel.send(message.author.mention + " There was an error with the download :o, please check the message and try again")
 client.run(token)

@@ -7,7 +7,7 @@ source sidvidpy/bin/activate
 echo "Installing the required libraries in the venv"
 pip install pytube==12.1.0
 pip install discord.py==1.7.3
-pip install selenium==4.4.3
+pip install you-get==0.4.1620
 echo "Executing python"
 python3 -u bin/sidvidserver.py
 echo "Shutting down venv "
