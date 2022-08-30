@@ -8,6 +8,7 @@ echo "Installing the required libraries in the venv"
 pip install pytube==12.1.0
 pip install discord.py==1.7.3
 pip install you-get==0.4.1620
+pip install youtube-dl==2021.12.17
 echo "Executing python"
 python3 -u bin/sidvidserver.py
 echo "Shutting down venv "
