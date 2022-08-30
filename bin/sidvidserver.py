@@ -66,6 +66,23 @@ async def on_message(message):
                         if tiktoksize < 104857600:
                             tiktokdl = subprocess.run(["you-get", "-o", "output", "-O", tiktoktime, invid])
                             await message.channel.send(message.author.mention, file=File("output/" + tiktoktime + ".mp4"))
+                elif "facebook" in message.content.lower() or "fb.watch" in message.content.lower():
+                    fbtime = str(int(time.time_ns()))
+                    fbname = fbtime + ".mp4"
+                    fbsize = ""
+                    if message.guild.premium_tier == 0 or message.guild.premium_tier == 1:
+                        fbsize = "8388608"
+                    elif message.guild.premium_tier == 2:
+                        fbsize = "52428800"
+                    elif message.guild.premium_tier == 3:
+                        fbsize = "104857600"
+                    print(str(datetime.now()) + " " + invid)
+                    print(str(datetime.now()) + " Filesize: Unknown")
+                    fbdl = subprocess.run(["youtube-dl", "--max-filesize", fbsize, invid, "-o", "output/" + fbname, "-f", "mp4"])
+                    if fbdl.returncode == 0:
+                        await message.channel.send(message.author.mention, file=File("output/" + fbname))
+                    else:
+                        raise Exception("Error in fb DL")
             except:
                 await message.channel.send(message.author.mention + " There was an error with the download :o, please check the message and try again")
 client.run(token)
