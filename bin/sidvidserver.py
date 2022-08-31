@@ -83,6 +83,25 @@ async def on_message(message):
                         await message.channel.send(message.author.mention, file=File("output/" + fbname))
                     else:
                         raise Exception("Error in fb DL")
+                elif "twitter" in message.content.lower():
+                    twitterinfo = subprocess.run(["you-get", "-i", invid], capture_output=True)
+                    twittersize = int(str(twitterinfo.stdout).split("Size")[1].split("(")[1].split(")")[0].split(" Bytes")[0])
+                    twittertitle = str(str(twitterinfo.stdout).split("\\n")[1].split("      ")[1])
+                    print(str(datetime.now()) + " " + twittertitle)
+                    print(str(datetime.now()) + " Filesize: " + str(twittersize))
+                    twittertime = str(int(time.time_ns()))
+                    if message.guild.premium_tier == 0 or message.guild.premium_tier == 1:
+                        if twittersize < 8388608:
+                            twitterdl = subprocess.run(["you-get", "-o", "output", "-O", twittertime, invid])
+                            await message.channel.send(message.author.mention, file=File("output/" + twittertime + ".mp4"))
+                    elif message.guild.premium_tier == 2:
+                        if twittersize < 52428800:
+                            twitterdl = subprocess.run(["you-get", "-o", "output", "-O", twittertime, invid])
+                            await message.channel.send(message.author.mention, file=File("output/" + twittertime + ".mp4"))
+                    elif message.guild.premium_tier == 3:
+                        if twittersize < 104857600:
+                            twitterdl = subprocess.run(["you-get", "-o", "output", "-O", twittertime, invid])
+                            await message.channel.send(message.author.mention, file=File("output/" + twittertime + ".mp4"))
             except:
                 await message.channel.send(message.author.mention + " There was an error with the download :o, please check the message and try again")
 client.run(token)
