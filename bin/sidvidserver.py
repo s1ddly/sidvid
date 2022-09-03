@@ -24,9 +24,12 @@ def yt_getsize(inlink):
 
 @client.event
 async def on_message(message):
+    print(message.author)
+    print(message.author.id)
+    print(client.user)
     if message.author == client.user:
         return
-    elif(message.author == "beak#7378" or message.author == "s1ddly#4576"):
+    elif(message.author.id == 1015483649946304593):
         await message.channel.send("CUM", reference=message)
     else:
         if message.content[0:4] == "-dl ":
