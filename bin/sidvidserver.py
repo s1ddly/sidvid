@@ -24,9 +24,6 @@ def yt_getsize(inlink):
 
 @client.event
 async def on_message(message):
-    print(message.author)
-    print(message.author.id)
-    print(client.user)
     if message.author == client.user:
         return
     elif(message.author.id == 1015483649946304593):
