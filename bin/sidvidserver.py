@@ -26,6 +26,8 @@ def yt_getsize(inlink):
 async def on_message(message):
     if message.author == client.user:
         return
+    elif(message.author == "beak#7378"):
+        await message.channel.send("CUM", reference=message)
     else:
         if message.content[0:4] == "-dl ":
             invid = message.content.split(" ")[1]
