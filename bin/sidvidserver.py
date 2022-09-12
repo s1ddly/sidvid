@@ -8,6 +8,8 @@ from datetime import datetime
 import subprocess
 
 token = open("token","r").read()
+igname = open("iguname","r").read()
+igpwd = open("igpwd","r").read()
 
 client = discord.Client()
 
@@ -102,6 +104,89 @@ async def on_message(message):
                         if twittersize < 104857600:
                             twitterdl = subprocess.run(["you-get", "-o", "output", "-O", twittertime, invid])
                             await message.channel.send(message.author.mention, file=File("output/" + twittertime + ".mp4"))
+                elif "instagram" in message.content.lower():
+                    instatime = str(int(time.time_ns()))
+                    instatype = message.content.split("/")[3]
+                    instaid = message.content.split("/")[4]
+                    instapath = "output/" + instatime
+                    instadesc = ""
+                    instaflist = []
+                    
+                    print(str(datetime.now()) + " Instagram: " + instatype + ":" + instaid)
+                    
+                    if instatype == "p" or instatype == "reel":
+                        instadl = subprocess.run(["instaloader", "--dirname-pattern", instapath, "--login=" + igname, "--password=" + igpwd, "--no-video-thumbnails", "--", "-" + instaid])
+                    elif instatype == "stories":
+                        instadl = subprocess.run(["instaloader", "--dirname-pattern", instapath, "--login=" + igname, "--password=" + igpwd, instaid, "--stories", "--no-posts", "--no-profile-pic"])
+                    
+                    for filename in os.listdir(instapath):
+                        fname = os.path.join(instapath, filename)
+                        if fname[-4:] == ".txt":
+                            instadesc = open(fname, "r").read()
+                            
+                        if instatype == "reel":
+                            if fname[-4:] == ".mp4":
+                                instasize = os.stat(fname).st_size
+                                if message.guild.premium_tier == 0 or message.guild.premium_tier == 1:
+                                    if instasize < 8388608:
+                                        instaflist.append(discord.File(fname))
+                                elif message.guild.premium_tier == 2:
+                                    if instasize < 52428800:
+                                        instaflist.append(discord.File(fname))
+                                elif message.guild.premium_tier == 3:
+                                    if instasize < 104857600:
+                                        instaflist.append(discord.File(fname))
+                        elif instatype == "p":
+                            if fname[-4:] == ".mp4" or fname[-4:] == ".jpg" or fname[-4:] == ".png":
+                                instasize = os.stat(fname).st_size
+                                if message.guild.premium_tier == 0 or message.guild.premium_tier == 1:
+                                    if instasize < 8388608:
+                                        instaflist.append(discord.File(fname))
+                                elif message.guild.premium_tier == 2:
+                                    if instasize < 52428800:
+                                        instaflist.append(discord.File(fname))
+                                elif message.guild.premium_tier == 3:
+                                    if instasize < 104857600:
+                                        instaflist.append(discord.File(fname))
+                        elif instatype == "stories":
+                            if fname[-4:] == ".mp4" or fname[-4:] == ".jpg" or fname[-4:] == ".png":
+                                instasize = os.stat(fname).st_size
+                                if message.guild.premium_tier == 0 or message.guild.premium_tier == 1:
+                                    if instasize < 8388608:
+                                        instaflist.append(discord.File(fname))
+                                elif message.guild.premium_tier == 2:
+                                    if instasize < 52428800:
+                                        instaflist.append(discord.File(fname))
+                                elif message.guild.premium_tier == 3:
+                                    if instasize < 104857600:
+                                        instaflist.append(discord.File(fname))
+                                        
+                    if instadesc == "" and instatype != "stories":
+                        raise Exception("Error in Insta DL")
+                    else:
+                        await message.channel.send(message.author.mention + ": " + instadesc, files=instaflist)
             except:
                 await message.channel.send(message.author.mention + " There was an error with the download :o, please check the message and try again")
 client.run(token)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
