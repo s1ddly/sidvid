@@ -161,7 +161,7 @@ async def on_message(message):
                                     if instasize < 104857600:
                                         instaflist.append(discord.File(fname))
                                         
-                    if instadesc == "" and instatype != "stories":
+                    if len(instaflist) == 0:
                         raise Exception("Error in Insta DL")
                     else:
                         await message.channel.send(message.author.mention + ": " + instadesc, files=instaflist)
