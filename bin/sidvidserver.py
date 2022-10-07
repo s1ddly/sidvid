@@ -117,7 +117,7 @@ async def on_message(message):
                     if instatype == "p" or instatype == "reel":
                         instadl = subprocess.run(["instaloader", "--dirname-pattern", instapath, "--login=" + igname, "--password=" + igpwd, "--no-video-thumbnails", "--", "-" + instaid])
                     elif instatype == "stories":
-                        instadl = subprocess.run(["instaloader", "--dirname-pattern", instapath, "--login=" + igname, "--password=" + igpwd, instaid, "--stories", "--no-posts", "--no-profile-pic"])
+                        instadl = subprocess.run(["instaloader", "--dirname-pattern", instapath, "--login=" + igname, "--password=" + igpwd, instaid, "--stories", "--no-posts", "--no-profile-pic", "--no-video-thumbnails"])
                     
                     for filename in os.listdir(instapath):
                         fname = os.path.join(instapath, filename)
