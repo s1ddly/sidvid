@@ -168,25 +168,3 @@ async def on_message(message):
             except:
                 await message.channel.send(message.author.mention + " There was an error with the download :o, please check the message and try again")
 client.run(token)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
