@@ -35,7 +35,7 @@ async def on_message(message):
             try:
                 if "youtu" in message.content.lower():
                     if message.guild.premium_tier == 0 or message.guild.premium_tier == 1:
-                        if yt_getsize(invid) < 8388608:
+                        if yt_getsize(invid) < 26214400:
                             await message.channel.send(message.author.mention, file=File(yt_dl(invid,str(int(time.time_ns())) + ".mp4")))
                         else:
                             await message.channel.send(message.author.mention + " Failed to download, file is over 8mb(" + str(yt_getsize(invid)) + " bytes) :(")
