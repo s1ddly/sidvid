@@ -57,7 +57,7 @@ async def on_message(message):
                     print(str(datetime.now()) + " Filesize: " + str(tiktoksize))
                     tiktoktime = str(int(time.time_ns()))
                     if message.guild.premium_tier == 0 or message.guild.premium_tier == 1:
-                        if tiktoksize < 8388608:
+                        if tiktoksize < 26214400:
                             tiktokdl = subprocess.run(["you-get", "-o", "output", "-O", tiktoktime, invid])
                             await message.channel.send(message.author.mention, file=File("output/" + tiktoktime + ".mp4"))
                     elif message.guild.premium_tier == 2:
@@ -73,7 +73,7 @@ async def on_message(message):
                     fbname = fbtime + ".mp4"
                     fbsize = ""
                     if message.guild.premium_tier == 0 or message.guild.premium_tier == 1:
-                        fbsize = "8388608"
+                        fbsize = "26214400"
                     elif message.guild.premium_tier == 2:
                         fbsize = "52428800"
                     elif message.guild.premium_tier == 3:
@@ -93,7 +93,7 @@ async def on_message(message):
                     print(str(datetime.now()) + " Filesize: " + str(twittersize))
                     twittertime = str(int(time.time_ns()))
                     if message.guild.premium_tier == 0 or message.guild.premium_tier == 1:
-                        if twittersize < 8388608:
+                        if twittersize < 26214400:
                             twitterdl = subprocess.run(["you-get", "-o", "output", "-O", twittertime, invid])
                             await message.channel.send(message.author.mention, file=File("output/" + twittertime + ".mp4"))
                     elif message.guild.premium_tier == 2:
@@ -128,7 +128,7 @@ async def on_message(message):
                             if fname[-4:] == ".mp4":
                                 instasize = os.stat(fname).st_size
                                 if message.guild.premium_tier == 0 or message.guild.premium_tier == 1:
-                                    if instasize < 8388608:
+                                    if instasize < 26214400:
                                         instaflist.append(discord.File(fname))
                                 elif message.guild.premium_tier == 2:
                                     if instasize < 52428800:
@@ -140,7 +140,7 @@ async def on_message(message):
                             if fname[-4:] == ".mp4" or fname[-4:] == ".jpg" or fname[-4:] == ".png":
                                 instasize = os.stat(fname).st_size
                                 if message.guild.premium_tier == 0 or message.guild.premium_tier == 1:
-                                    if instasize < 8388608:
+                                    if instasize < 26214400:
                                         instaflist.append(discord.File(fname))
                                 elif message.guild.premium_tier == 2:
                                     if instasize < 52428800:
@@ -152,7 +152,7 @@ async def on_message(message):
                             if fname[-4:] == ".mp4" or fname[-4:] == ".jpg" or fname[-4:] == ".png":
                                 instasize = os.stat(fname).st_size
                                 if message.guild.premium_tier == 0 or message.guild.premium_tier == 1:
-                                    if instasize < 8388608:
+                                    if instasize < 26214400:
                                         instaflist.append(discord.File(fname))
                                 elif message.guild.premium_tier == 2:
                                     if instasize < 52428800:
