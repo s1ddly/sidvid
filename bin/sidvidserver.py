@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from pytube import YouTube
+from pytubefix import YouTube
 import os
 import discord
 from discord import File
